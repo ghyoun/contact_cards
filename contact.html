@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="UTF-8">
+    <title>Contact Card</title>
+    <script type="text/javascript" src='http://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>
+    <script type="text/javascript">
+
+        $(document).on("click", ".user", function() {
+            if($(this).attr("status") == 'userInfo') {
+                $(this).children('h6').after("<h2>" + $(this).attr("descriptionInfo") + "</h2>");
+                $(this).children('h1, h4').remove();
+                $(this).attr("status", "description");
+            } else {
+                $(this).children('h6').after("<h1>" + $(this).attr("firstName") +" " + $(this).attr("lastName") +"</h1><h4>Click for description!</h4>");
+                $(this).children('h2').remove();
+                $(this).attr("status", "userInfo");
+            }
+        });
+
+        $(document).ready(function() {
+            $("button").click(function() {
+                $("#userform").submit(function() {
+                    return false;
+                });
+                var first = $("#first").val();
+                var last = $("#last").val();
+                var description = $("#description").val();
+                var newUser = "<div class='user' status='userInfo' firstName='" + first + "' lastName='" + last + "' descriptionInfo='" + description + "'><h6></h6><h1>" + first +" " + last +"</h1><h4>Click for description!</h4></div>"
+                $("#start").append(newUser);
+                console.log($(newUser).attr("descriptionInfo"));
+            });
+        });
+    </script>
+
+</head>
+<body>
+    <div id="input">
+        <form id="userform">
+            First Name: <input id="first" name="firstname" type="text">
+            Last Name: <input id="last" name="lastname" type="text">
+            <textarea id="description" name="description" form="userform">Enter description...</textarea>
+        </form>
+        <button type="button">Add User</button>
+    </div>
+
+    <div id="cards">
+        <div id="start">
+        </div>
+    </div>
+</body>
+</html>
